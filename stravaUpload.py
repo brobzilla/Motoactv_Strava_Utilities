@@ -19,7 +19,7 @@ class Strava():
         self.id = ''
         self.token = ''
         self.name = ''
-        
+
     def get_web_data(self, url, values):
         data = urllib.urlencode(values)
         req = urllib2.Request(url, data)
@@ -29,7 +29,7 @@ class Strava():
 
     def parseAthleteToken(self):
         temp = self.athlete_token['athlete']
-        self.id = temp['id'] 
+        self.id = temp['id']
         self.token = self.athlete_token['token']
         self.name = temp['name']
 
@@ -47,7 +47,7 @@ class Strava():
             print "STRAVA - Failed login"
             print resp
             sys.exit()
-  
+
     def upload(self, filename):
         f = open(filename)
         tcx = f.read()
@@ -59,7 +59,7 @@ class Strava():
         jresp = self.get_web_data(url, params)
         upload_id = jresp['upload_id']
         return upload_id
-        
+
     def mileage(self):
         "THIS API DOES NOT APPEAR TO BE FUNCTIONAL - TBD"
         url = "http://www.strava.com/api/v2/athletes"
@@ -67,9 +67,9 @@ class Strava():
         data = {'token': self.token}
         jresp = self.get_web_data(url, data)
         print jresp
-        
 
-def UploadToStrava(filename, email, passwd):            
+
+def UploadToStrava(filename, email, passwd):
     s = Strava(email, passwd)
     s.login()
     uploadid = s.upload(filename)
@@ -78,7 +78,7 @@ def UploadToStrava(filename, email, passwd):
 def main():
     if len(sys.argv) != 2:
            print( "Usage: " + sys.argv[0] + " <TCX file>")
-           sys.exit(1) 
-        
+           sys.exit(1)
+
     pathToTCX = sys.argv[1]
     UploadToStrava(pathToTCX)
