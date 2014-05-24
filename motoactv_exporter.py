@@ -9,7 +9,11 @@ import os
 import sys
 
 def move(src,dst):
-    os.system ("mv"+ " " + src + " " + dst)
+    newDir = os.path.dirname(dst)
+    if(not os.path.isdir(newDir)):
+        os.system("mkdir " + newDir)
+
+    os.system("mv"+ " " + src + " " + dst)
 
 def main():
 
@@ -44,4 +48,5 @@ def main():
     move(filenamecsv, './MotoBackups/'+filenamecsv)
     move(tcxfile, './TCXBackups/'+tcxfile)
 
-main()
+if __name__=="__main__":
+    main()
